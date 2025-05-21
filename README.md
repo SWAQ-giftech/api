@@ -76,7 +76,7 @@ This qr code should be printed and sent with the gift so the `Recipient` can sca
 
 ## Pre-printed integration
 
-We will provide pre-printed qr codes so you can add them to packages in fulfillment. You can request some [here](https://swaq.co/sell-swaq/#contact).
+We will provide pre-printed qr codes so you can add them to packages in fulfillment. You can request some [here](https://www.swaq.co/contact).
 
 ### List qr codes
 

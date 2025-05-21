@@ -4,7 +4,7 @@ API integration documentation for [SWAQ](https://swaq.co/).
 
 This API will allow you to generate unique qr codes as digital images for "self-printing" or to assign pre-printed qr codes to customer email addresses and order references.
 
-You can request access to our demo environment [here](https://swaq.co/sell-swaq/#contact).
+You can request access to our demo environment [here](https://www.swaq.co/contact).
 
 We have a [Swagger UI](https://api.stg.swaq.ddn.amalgama.co/api-docs/index.html?urls.primaryName=Merchant%20API%20V1%20Docs) were you can try the endpoints.
 

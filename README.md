@@ -6,10 +6,9 @@ This API will allow you to generate unique qr codes as digital images for "self-
 
 You can request access to our demo environment [here](https://swaq.co/sell-swaq/#contact).
 
-We have a [Swagger UI](https://api.stg.swaq.ddn.amalgama.co/api-docs/index.html?urls.primaryName=Merchant%20API%20V1%20Docs) where you can try the endpoints.
+We have a [Swagger UI](https://api.stg.swaq.ddn.amalgama.co/api-docs/index.html?urls.primaryName=Merchant%20API%20V1%20Docs) were you can try the endpoints.
 
 ## Table of Contents
-
   * [Language](#language)
   * [API key](#api-key)
   * [Self printed integration](#self-printed-integration)
@@ -22,68 +21,72 @@ We have a [Swagger UI](https://api.stg.swaq.ddn.amalgama.co/api-docs/index.html?
 
 ## Language
 
-  - **Sender**: The user (the gift-buying customer) responsible for creating and uploading the video linked to the QR code.
-  - **Recipient**: The person receiving the gift who scans the QR code to watch the video.
-  - **Card**: The unique QR code system.
-  - **Activation**: The process of sending an email to the `Sender` containing an **activation link**. This link allows the Sender to record or upload their video message for the Recipient.
-  - **Locale**: The language used for the activation email and the Sender's video upload experience. Supported values: `en`, `fr`, and `en_ar` (English/Arabic bilingual).
+- **Sender** is the user (the gift buying customer) that is responsible for creating and uploading the video that is linked to the QR code.
+- **Recipient** is the user that scans the qr code and sees the `Sender` video.
+- **Card** is the term used in our system to refer to a unique QR code.
+- **Activation** is the process of assigning the `Sender` responsibility to a user by email with a link to create, customize and upload a video to a unique qr code.
+- **Locale** is the language used for the activation email and the Sender's video upload experience. Supported values: en, fr, and en_ar (English/Arabic bilingual).
 
 ## API key
 
-To make use of the endpoints we will provide an API key. You need to send the api key in the `Authorization: Bearer` header.
+To make use of the endpoints we will provide an API key.
+
+You need to send the api key in the `Authorization: Bearer` header:
+``` sh
+curl  -X POST \
+  'https://api.stg.swaq.ddn.amalgama.co/1/cards/create_and_activate' \
+  --header 'Accept: */*' \
+  --header 'Authorization: Bearer [your_api_key]' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+    "activation_email": "email@example.com"
+} 
+```
 
 ## Self printed integration
 
+![SWAQ System Design Diagram](./images/self-printed-ssd.png)
+
 ### Create and activate
+For the self printed integration you can send a `POST` request to the path `/1/cards/create_and_activate`, this will create a card in our system and trigger an email to the `activation_email` provided with the link to create and upload the sender video. The request should look like this:
 
-For the self-printed integration, send a `POST` request to `/1/cards/create_and_activate`. This creates a card and triggers an activation email to the `Sender`.
-
-**Parameters:**
-
-  * `activation_email`: (Required) The Sender's email.
-  * `recipient_name`: (Optional) The name of the gift receiver; this is included in the email sent to the Sender.
-  * `locale`: (Optional) Language for the email/experience (`en`, `fr`, `en_ar`). Defaults to `en`.
-
-<!-- end list -->
-
-```sh
-curl -X POST \
+``` sh
+curl  -X POST \
   'https://api.stg.swaq.ddn.amalgama.co/1/cards/create_and_activate' \
   --header 'Accept: */*' \
   --header 'Authorization: Bearer {your_api_key}' \
   --header 'Content-Type: application/json' \
   --data-raw '{
     "activation_email": "sender@example.com",
-    "recipient_name": "John Doe",
-    "locale": "en_ar"
+    "recipient_name": "Reciever's name",
+    "locale": "en"
   }' 
 ```
-
-This will return an `url` (to generate the QR) and an `id`.
+This will return an `url`, which can be used to generate a qr code, and an `id`.
 
 ### Generate qr code
 
-To generate a QR code image for the `url` using the `card_id`, use `/1/cards/{card_id}/qrcode`:
+Also we provide an endpoint to generate a qr code image for the `url` using the `card_id` `/1/cards/{card_id}/qrcode`, like this:
 
-```sh
-curl -X GET \
+``` sh
+curl  -X GET \
   'https://api.stg.swaq.ddn.amalgama.co/1/cards/{card_id}/qrcode' \
   --header 'Accept: */*' \
   --header 'Authorization: Bearer {your_api_key}'
 ```
 
-This QR code should be printed and sent with the gift so the **Recipient** can scan it.
+This qr code should be printed and sent with the gift so the `Recipient` can scan it.
 
 ## Pre-printed integration
 
-We provide pre-printed QR codes for fulfillment. You can request them [here](https://swaq.co/sell-swaq/#contact).
+We will provide pre-printed qr codes so you can add them to packages in fulfillment. You can request some [here](https://swaq.co/sell-swaq/#contact).
 
 ### List qr codes
 
-This endpoint lists available QR codes assigned to your merchant account.
+This endpoint provides the list of remaining available qr codes assigned to a merchant account.
 
-```sh
-curl -X GET \
+``` sh
+curl  -X GET \
   'https://api.stg.swaq.ddn.amalgama.co/1/cards?per_page=1&filter[available_for_activation_eq]=true' \
   --header 'Accept: */*' \
   --header 'Authorization: Bearer {your_api_key}'
@@ -91,24 +94,22 @@ curl -X GET \
 
 ### Activate qr code
 
-Assign a specific `card_id` to a customer's order. This triggers the activation email to the `Sender`.
+You can send a `POST` request to the path `/1/cards/{card_id}/activate`, this will trigger an email to the `activation_email` provided with the link to create and upload the sender video. The request should look like this:
 
-```sh
-curl -X POST \
+``` sh
+curl  -X POST \
   'https://api.stg.swaq.ddn.amalgama.co/1/cards/{card_id}/activate' \
   --header 'Accept: */*' \
   --header 'Authorization: Bearer {your_api_key}' \
   --header 'Content-Type: application/json' \
   --data-raw '{
-    "activation_email": "sender@example.com",
-    "recipient_name": "John Doe",
-    "order_reference": "ORD-0072",
-    "locale": "en_ar"
+    "activation_email": "example@.co",
+    "order_reference": null
   }'
 ```
 
 ## Swagger UI
 
-You can try these endpoints [here](https://api.stg.swaq.ddn.amalgama.co/api-docs/index.html?urls.primaryName=Merchant%20API%20V1%20Docs).
+You can try this endpoints [here](https://api.stg.swaq.ddn.amalgama.co/api-docs/index.html?urls.primaryName=Merchant%20API%20V1%20Docs).
 
-Press the `Authorize` button, enter your `API key`, and you are ready to go.
+Press the `Authorize` button, enter your `API key` and you are ready to go.

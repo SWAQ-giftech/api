@@ -10,15 +10,15 @@ We have a [Swagger UI](https://api.stg.swaq.ddn.amalgama.co/api-docs/index.html?
 
 ## Table of Contents
 
-  * [Language](https://www.google.com/search?q=%23language)
-  * [API key](https://www.google.com/search?q=%23api-key)
-  * [Self printed integration](https://www.google.com/search?q=%23self-printed-integration)
-      * [Create and activate](https://www.google.com/search?q=%23create-and-activate)
-      * [Generate qr code](https://www.google.com/search?q=%23generate-qr-code)
-  * [Pre-printed integration](https://www.google.com/search?q=%23pre-printed-integration)
-      * [List qr codes](https://www.google.com/search?q=%23list-qr-codes)
-      * [Activate qr code](https://www.google.com/search?q=%23activate-qr-code)
-  * [Swagger UI](https://www.google.com/search?q=%23swagger-ui)
+  * [Language](#language)
+  * [API key](#api-key)
+  * [Self printed integration](#self-printed-integration)
+    * [Create and activate](#create-and-activate)
+    * [Generate qr code](#generate-qr-code)
+  * [Pre-printed integration](#pre-printed-integration)
+    * [List qr codes](#list-qr-codes)
+    * [Activate qr code](#activate-qr-code)
+  * [Swagger UI](#swagger-ui)
 
 ## Language
 
